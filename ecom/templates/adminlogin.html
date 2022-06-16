@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <title>Log in - Reviewhub</title>
+    <link rel="icon" href="/static/images/logohub.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" type="text/css">
+
+
+</head>
+<body style="background-image: url(/static/images/adminbg.png);">
+
+<br>
+<br>
+
+<div class="admin-login">
+<h5>Admin Log in</h5>
+<br>
+    <form>
+    
+    <div class="email">
+    <label class="form-label" for="form2Example1" style="text-align: left;">Username </label>
+    <input type="text" id="form2Example1" class="form-control" />
+    <label for="" id="username_error"></label>
+      
+    </div>
+    
+  
+    
+    <div class="password">
+        <label class="form-label" for="form2Example2">Password</label>
+      <input type="password" id="form2Example2" class="form-control" />
+      <label for="" id="password_error"></label>
+      
+    </div>
+    <br>
+    <br>
+
+  <a href="{% url 'adminhome' %}" style="text-decoration: none;"><button type="button" onclick=" return validation()" class="btn btn-primary btn-block mb-4" style="background-color: #04aa6d; width: 300px; text-align: center; align-items: center; margin-left: 20px;">Log in</button></a>
+  
+  </form>
+
+  <script>
+    function validation() {
+      status = 1
+      email = document.getElementById('form2Example1')
+      email_error = document.getElementById('username_error')
+      password = document.getElementById('form2Example2')
+      password_error = document.getElementById('password_error')
+      if (email.value == "") {
+          email.style.borderColor = "#e74c3c"
+          email_error.innerHTML = "please enter your username "
+          email_error.style.color = "#e74c3c"
+          email_error.style.display = "block"
+          status = 0
+      }
+      else {
+          email.style.borderColor = "black"
+          email_error.style.display = "none"
+          status = 1
+      }
+      if (password.value == "") {
+          password.style.borderColor = "#e74c3c"
+          password_error.innerHTML = "please enter your password"
+          password_error.style.color = "#e74c3c"
+          password_error.style.display = "block"
+          status = 0
+      }
+      else {
+          password.style.borderColor = "black"
+          password_error.style.display = "none"
+          status = 1            
+      }
+
+      if(status ==0){
+          return false
+      }
+  }
+
+  </script>
+</div>
+<br>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+  
+</body>
+</html>

@@ -1,0 +1,132 @@
+{% extends 'admindashboard.html' %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+<body onload="load_data()">
+        <table id="creatortable" border="1" style="margin-left: 40px;margin-top: 50px;">
+            <thead>
+            <tr>
+                <th>Model</th>
+                <th>Brand</th>
+                <th>Rate</th>
+                <th>Image</th>
+            </tr>
+            </thead>
+        </table>
+        <script>
+            function load_data(){
+                $.ajax({
+                    url:'/loaddata/',
+                   type: 'GET',
+                    success:function(response){
+                        console.log(response.datapass)
+                       data=response.datapass
+                        $('.tr').remove()
+                        for(i=0;i<response.datapass.length;i++){
+                            $("#creatortable").append("<tr class='tr'><td>"+response.datapass[i].model+"</td><td>"+response.datapass[i].brand+"</td><td>"+response.datapass[i].rate+"</td><td>"+response.datapass[i].image+"</td><button onclick='delete_button("+response.datapass[i].id+")' type='button' class='btn btn-danger'>Delete</button></td><td> <button onclick='update_data("+response.datapass[i].id+")' type='button' class='btn btn-primary'data-toggle='modal' data-target='#exampleModal' >Update</button></td></tr>")
+                        }
+                    }
+                })
+            console.log('hello')
+            }
+            function delete_button(id){
+                $.ajaxSetup({
+                    data:{csrfmiddlewaretoken:'{{csrf_token}}'}
+                })
+                $.ajax({
+                    url:'/deletedata/',
+                    type: 'POST',
+                    data:{
+                        key:id   
+                    },
+                    success:function(response){
+                        alert(response.message)
+                        load_data()
+                    }
+                })
+                //console.log(id)
+            } 
+            function update_data(id){
+                $.ajaxSetup({
+                    data:{csrfmiddlewaretoken:'{{csrf_token}}'}
+                })
+                 //$.ajax({
+                    // url:'/updatedata/',
+                     //type: 'POST',
+                    // data:{
+                     //    key:id
+                    // },
+                    // success:function(response){
+                        //alert(response.message)
+                     //   pk_id=response.jsonupdate[0]['id']
+                     //   console.log(response.jsonupdate[0]['model'])
+                     //   document.getElementById('model').value=response.jsonupdate[0]['model']
+                      //  document.getElementById('brand').value=response.jsonupdate[0]['brand']
+                     //   document.getElementById('rate').value=response.jsonupdate[0]['rate']
+                     //   document.getElementById('image').value=response.jsonupdate[0]['image']
+                   // }
+    
+                // })
+                console.log('hello')
+             }
+             function update(id){
+                console.log(id)
+                $.ajax({
+                    url:'/updated/',
+                    type: 'POST',
+                    data:{
+                        key:id,
+                        model:$("#model").val(),
+                        brand:$("#brand").val(),
+                        rate:$("#rate").val(),
+                        image:$("#image").val()
+                    },
+                    success:function(response){
+                    alert(response.message)
+                    load_data()
+                    }
+                })
+             }
+    
+        </script>
+        <form action="" method="post" enctype="multipart/form-data" >
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <label style="padding-right: 10px;">Model:</label><input type="text" name="model" id="model"><br>
+                  <label style="padding-right: 10px;">Brand:</label><select id="brand" name="brand">
+                    <option value="Xiaomi">Xiaomi</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="OnePlus">OnePlus</option>
+                    <option value="Apple">Apple</option>
+                    <option value="Iqoo">Iqoo</option>
+                    <option value="Realme">Realme</option>
+                    <option value="Oppo">Oppo</option>
+                    <option value="Motorola">Motorola</option>
+                    <option value="Vivo">Vivo</option>
+                    <option value="Sony">Sony</option>
+                    <option value="Asus">Asus</option>
+                    <option value="Micromax">Micromax</option>
+                    <option value="Nothing">Nothing</option>
+                  </select><br>
+                  <label style="padding-right: 10px;">Rate:</label><input style="width:250px" type="number" name="rate" id="rate"><br>
+                  <label style="padding-right: 10px;">Image:</label><input type="file" required name="image" id="image">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  <button onclick= "update(pk_id)" type="button" class="btn btn-primary">Update Data</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+          {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    
+</html>
